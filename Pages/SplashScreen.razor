@@ -1,53 +1,48 @@
 @page "/"
 @inject NavigationManager Nav
-@implements IDisposable
+
+@*
+    Splash screen - simplified per the new design.
+
+    The old version auto-redirected to /login after 2.2 seconds. The new
+    mockup shows both "Register" and "Login" buttons up front instead of a
+    timed transition, so that auto-navigation timer has been removed - the
+    user now picks where to go.
+*@
 
 <PageTitle>Whisker List</PageTitle>
 
-<div class="whisker-screen splash-screen">
-    <div class="splash-stack">
-        <CatPeeking Size="large" />
+<!-- Full-page gold background; everything is centered both ways -->
+<div class="min-h-screen w-full flex flex-col items-center justify-center gap-6 bg-amber-400 px-6 text-center">
 
-        <SpiralNotepad CssClass="splash-notepad">
-            <h1 class="brand-title">WHISKER</h1>
-            <p class="brand-script">List</p>
+    <!--
+        LOGO: drop your whiskers-and-heart artwork at wwwroot/images/logo.png
+        and it will show up here automatically. The same file is reused
+        (at a smaller size) on the Login/Register screens and in the
+        dashboard sidebar, so you only need the one image.
+    -->
+    <img src="images/logo.png" alt="Whisker List logo" class="w-40 h-40 object-contain" />
 
-            <ul class="splash-checklist">
-                <li>
-                    <span class="paw-check">
-                        <PawIcon />
-                    </span>
-                    <span class="checklist-line"></span>
-                </li>
-                <li>
-                    <span class="checkbox-square"></span>
-                    <a href="login" class="checklist-label">Login!</a>
-                </li>
-                <li>
-                    <span class="checkbox-square"></span>
-                    <a href="register" class="checklist-label">Register!</a>
-                </li>
-                <li>
-                    <span class="checkbox-square"></span>
-                    <span class="checklist-line"></span>
-                </li>
-            </ul>
-        </SpiralNotepad>
+    <div>
+        <!-- font-['Playfair_Display'] pulls in the serif font already
+             linked in index.html via Google Fonts -->
+        <h1 class="font-['Playfair_Display'] italic font-black text-5xl text-black tracking-wide">
+            WHISKER LIST
+        </h1>
+        <p class="font-['Playfair_Display'] italic text-gray-800 mt-2">
+            Stay pawsitive. Get things done.
+        </p>
+    </div>
+
+    <!-- Two plain white buttons, matching the mockup -->
+    <div class="flex gap-4 mt-4">
+        <a href="register"
+           class="px-8 py-2 bg-white border border-black rounded-md font-semibold text-black hover:bg-gray-100 transition-colors">
+            Register
+        </a>
+        <a href="login"
+           class="px-8 py-2 bg-white border border-black rounded-md font-semibold text-black hover:bg-gray-100 transition-colors">
+            Login
+        </a>
     </div>
 </div>
-
-@code {
-    private System.Threading.Timer? _timer;
-
-    protected override void OnInitialized()
-    {
-        // Show the splash briefly, then move on to the login screen
-        // (tapping Login!/Register! above jumps there immediately).
-        _timer = new System.Threading.Timer(_ =>
-        {
-            InvokeAsync(() => Nav.NavigateTo("/login"));
-        }, null, TimeSpan.FromSeconds(2.2), Timeout.InfiniteTimeSpan);
-    }
-
-    public void Dispose() => _timer?.Dispose();
-}

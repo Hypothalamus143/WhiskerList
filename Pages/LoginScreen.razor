@@ -4,32 +4,43 @@
 
 <PageTitle>Log in - Whisker List</PageTitle>
 
-<div class="whisker-screen login-screen">
-    <CatPeeking Size="small" />
+<!-- Full-page gold background, card centered on top of it -->
+<div class="min-h-screen w-full bg-amber-400 relative flex items-center justify-center px-4">
 
-    <SpiralNotepad CssClass="login-notepad">
-        <h1 class="form-title">
-            <PawIcon CssClass="paw-icon" />
+    <!-- Small logo pinned to the top-left corner, matching the mockup.
+         Same image file as the splash screen, just smaller here. -->
+    <img src="images/logo.png" alt="Whisker List logo" class="absolute top-6 left-6 w-16 h-16 object-contain" />
+
+    <!-- White card -->
+    <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl p-8">
+        <h1 class="font-['Playfair_Display'] italic font-bold text-3xl text-black text-center mb-6">
             LOGIN
-            <PawIcon CssClass="paw-icon" />
         </h1>
 
-        <EditForm Model="_model" OnValidSubmit="HandleLogin" class="whisker-form">
+        <EditForm Model="_model" OnValidSubmit="HandleLogin" class="flex flex-col gap-4">
             <DataAnnotationsValidator />
 
-            <InputText @bind-Value="_model.Username" placeholder="Username" class="whisker-input" />
-            <InputText @bind-Value="_model.Password" type="password" placeholder="Password" class="whisker-input" />
+            <InputText @bind-Value="_model.Username" placeholder="Username"
+                       class="w-full px-4 py-2 rounded-md border border-amber-300 bg-amber-50 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-400" />
+
+            <InputText @bind-Value="_model.Password" type="password" placeholder="Password"
+                       class="w-full px-4 py-2 rounded-md border border-amber-300 bg-amber-50 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-400" />
 
             @if (!string.IsNullOrEmpty(_error))
             {
-                <p class="form-error">@_error</p>
+                <p class="text-red-600 text-sm text-center">@_error</p>
             }
 
-            <button type="submit" class="whisker-button">Login</button>
+            <button type="submit"
+                    class="w-full py-2 mt-2 bg-black text-white rounded-md font-semibold hover:bg-gray-800 transition-colors">
+                Login
+            </button>
         </EditForm>
 
-        <p class="form-footer">No account yet? <a href="register">Register</a></p>
-    </SpiralNotepad>
+        <p class="text-center text-sm text-gray-600 mt-4">
+            No account yet? <a href="register" class="text-black underline">Register</a>
+        </p>
+    </div>
 </div>
 
 @code {
