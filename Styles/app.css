@@ -1,0 +1,19 @@
+/*
+  Tailwind entry point for Whisker List.
+
+  This is the SOURCE file - you write Tailwind directives here, then the
+  Tailwind CLI compiles it into wwwroot/css/tailwind.css, which is the
+  file actually linked from index.html. Don't edit wwwroot/css/tailwind.css
+  directly; it gets overwritten every time the CLI rebuilds.
+*/
+@import "tailwindcss";
+
+/* 
+  Explicitly point Tailwind at the folders that contain .razor markup with
+  class="..." attributes, so it knows which utility classes to generate.
+  (Tailwind v4 auto-detects most files on its own, but being explicit here
+  avoids any surprises if a page ever lives somewhere new.)
+*/
+@source "../Pages";
+@source "../Shared";
+@source "../Layout";

@@ -1,210 +1,515 @@
-@import "tailwindcss";
+/* ===== Whisker List theme =====
+   Matches the Splash / Login / Dashboard Figma mockups: bold yellow
+   backgrounds, a black cat mascot, a spiral-bound notepad card, and a
+   yellow sidebar dashboard with a white content pane. */
 
-@theme {
-  --color-whisker-yellow: #FFC634;
-  --color-whisker-yellow-dark: #f2b515;
-  --color-whisker-black: #111111;
-  --color-whisker-paper: #f6f8ff;
-  --color-whisker-paper-line: #dbe1f2;
-  --color-whisker-ink: #1c1c1c;
-  --color-whisker-muted: #7a7a7a;
-
-  --font-heading: "Playfair Display", "Times New Roman", serif;
-  --font-script: "Dancing Script", cursive;
+:root {
+    --whisker-yellow: #ffc634;
+    --whisker-yellow-dark: #f2b515;
+    --whisker-black: #111111;
+    --whisker-paper: #f6f8ff;
+    --whisker-paper-line: #dbe1f2;
+    --whisker-ink: #1c1c1c;
+    --whisker-muted: #7a7a7a;
+    --whisker-font-heading: 'Playfair Display', 'Times New Roman', serif;
+    --whisker-font-script: 'Dancing Script', cursive;
 }
 
-@layer base {
-  html, body {
-    @apply font-sans;
-  }
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 /* ---- Shared full-bleed screen ---- */
 .whisker-screen {
-  @apply min-h-screen w-full flex items-center justify-center relative box-border px-6 py-10;
-  background-color: #FFC634;
+    min-height: 100vh;
+    width: 100%;
+    background: var(--whisker-yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    padding: 2.5rem 1.5rem;
 }
 
 .not-found-screen {
-  @apply min-h-screen flex flex-col gap-3 items-center justify-center;
-  background-color: #FFC634;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: center;
+    background: var(--whisker-yellow);
+}
+
+/* ---- Cat mascot ---- */
+.cat-logo {
+    display: block;
+}
+
+.cat-logo .cat-fill {
+    fill: var(--whisker-black);
+}
+
+.cat-logo .cat-eye-white {
+    fill: #ffffff;
+}
+
+.cat-logo .cat-eye-pupil {
+    fill: var(--whisker-black);
+}
+
+.cat-logo .cat-paw-line {
+    fill: none;
+    stroke: var(--whisker-black);
+    stroke-width: 6;
+    stroke-linecap: round;
+}
+
+.cat-logo .cat-forehead-gap {
+    fill: var(--whisker-yellow);
+}
+
+.cat-logo-large {
+    width: min(220px, 55%);
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.cat-logo-small {
+    width: 4.5rem;
 }
 
 /* ---- Splash screen ---- */
 .splash-stack {
-  @apply flex flex-col items-center w-full max-w-[22rem];
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 22rem;
 }
 
 .splash-notepad {
-  @apply -mt-5;
+    margin-top: -1.25rem;
 }
 
 /* ---- Login / Register screens ---- */
 .login-screen {
-  @apply flex-col;
+    flex-direction: column;
+}
+
+.login-screen > .cat-logo-small {
+    position: absolute;
+    top: 1.75rem;
+    left: 2rem;
 }
 
 .login-notepad {
-  @apply max-w-[20rem];
+    max-width: 20rem;
 }
 
-/* ---- Simple card container ---- */
+/* ---- Spiral notepad card ---- */
 .spiral-notepad-container {
-  @apply bg-whisker-paper border-[3px] border-whisker-black rounded-[0.9rem] shadow-[0.5rem_0.5rem_0_rgba(0,0,0,0.18)] w-full max-w-[24rem] overflow-hidden box-border;
+    background: var(--whisker-paper);
+    border: 3px solid var(--whisker-black);
+    border-radius: 0.9rem;
+    box-shadow: 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.18);
+    width: 100%;
+    max-width: 24rem;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.spiral-binding {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem 0;
+    background: var(--whisker-paper);
+}
+
+.spiral-loop {
+    position: relative;
+    width: 0.7rem;
+    height: 1.3rem;
+}
+
+.spiral-loop .hole {
+    position: absolute;
+    top: -0.35rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--whisker-black);
+}
+
+.spiral-loop .wire {
+    position: absolute;
+    top: -0.15rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0.55rem;
+    height: 1.1rem;
+    border: 2.5px solid var(--whisker-black);
+    border-top: none;
+    border-radius: 0 0 50% 50%;
 }
 
 .notepad-paper {
-  @apply pt-8 px-[1.75rem] pb-8;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent,
-    transparent 1.75rem,
-    var(--color-whisker-paper-line, #dbe1f2) 1.75rem,
-    var(--color-whisker-paper-line, #dbe1f2) calc(1.75rem + 1px)
-  );
+    padding: 1.25rem 1.75rem 2rem;
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 1.75rem,
+        var(--whisker-paper-line) 1.75rem,
+        var(--whisker-paper-line) calc(1.75rem + 1px)
+    );
 }
 
 /* ---- Headings ---- */
 .brand-title,
 .form-title,
 .dashboard-welcome {
-  @apply font-heading font-black italic text-whisker-ink text-center m-0;
+    font-family: var(--whisker-font-heading);
+    font-weight: 900;
+    font-style: italic;
+    color: var(--whisker-ink);
+    text-align: center;
+    margin: 0;
 }
 
 .brand-title {
-  @apply text-[2.3rem] tracking-wider;
+    font-size: 2.3rem;
+    letter-spacing: 0.05em;
 }
 
 .brand-script {
-  @apply font-script font-bold text-[2.6rem] text-center -mt-[0.6rem] mx-0 mb-4 text-whisker-ink;
+    font-family: var(--whisker-font-script);
+    font-weight: 700;
+    font-size: 2.6rem;
+    text-align: center;
+    margin: -0.6rem 0 1rem;
+    color: var(--whisker-ink);
 }
 
 .form-title {
-  @apply text-[1.7rem] tracking-wider flex items-center justify-center gap-[0.6rem] mb-5;
+    font-size: 1.7rem;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+}
+
+.paw-icon-svg {
+    width: 1.4rem;
+    height: 1.4rem;
+    fill: var(--whisker-yellow-dark);
+    flex: none;
 }
 
 /* ---- Splash checklist ---- */
 .splash-checklist {
-  @apply list-none p-0 m-0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .splash-checklist li {
-  @apply flex items-center gap-[0.6rem] mb-4;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
 }
 
-.checkbox-square {
-  @apply flex-none w-[1.1rem] h-[1.1rem] border-[1.5px] border-whisker-ink rounded-[0.15rem] inline-flex items-center justify-center;
+.checkbox-square,
+.paw-check {
+    flex: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    border: 1.5px solid var(--whisker-ink);
+    border-radius: 0.15rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.paw-check .paw-icon-svg {
+    width: 0.85rem;
+    height: 0.85rem;
+    fill: var(--whisker-yellow-dark);
 }
 
 .checklist-line {
-  @apply flex-1 border-b-[1.5px] border-whisker-ink h-[1px] mt-4;
+    flex: 1;
+    border-bottom: 1.5px solid var(--whisker-ink);
+    height: 1px;
+    margin-top: 1rem;
 }
 
 .checklist-label {
-  @apply font-script text-[1.35rem] text-whisker-ink no-underline border-b-[1.5px] border-whisker-ink flex-1 pb-[0.1rem] hover:text-whisker-yellow-dark;
+    font-family: var(--whisker-font-script);
+    font-size: 1.35rem;
+    color: var(--whisker-ink);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--whisker-ink);
+    flex: 1;
+    padding-bottom: 0.1rem;
+}
+
+.checklist-label:hover {
+    color: var(--whisker-yellow-dark);
 }
 
 /* ---- Forms (login/register/write task) ---- */
 .whisker-form {
-  @apply flex flex-col gap-[0.85rem];
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
 }
 
 .whisker-input {
-  @apply font-sans bg-[#fffdf7] border-[1.5px] border-whisker-ink rounded-[0.4rem] py-[0.6rem] px-[0.85rem] text-[0.95rem] italic text-whisker-ink w-full box-border placeholder:text-[#9a9a9a] placeholder:italic;
+    font-family: inherit;
+    background: #fffdf7;
+    border: 1.5px solid var(--whisker-ink);
+    border-radius: 0.4rem;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--whisker-ink);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.whisker-input::placeholder {
+    color: #9a9a9a;
+    font-style: italic;
 }
 
 .whisker-button {
-  @apply font-sans bg-whisker-black text-white border-none rounded-[0.4rem] py-[0.7rem] px-4 font-semibold tracking-wide cursor-pointer mt-[0.4rem] hover:bg-[#2c2c2c];
+    font-family: inherit;
+    background: var(--whisker-black);
+    color: #ffffff;
+    border: none;
+    border-radius: 0.4rem;
+    padding: 0.7rem 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    margin-top: 0.4rem;
+}
+
+.whisker-button:hover {
+    background: #2c2c2c;
 }
 
 .form-error {
-  @apply text-[#b3261e] text-[0.85rem] m-0;
+    color: #b3261e;
+    font-size: 0.85rem;
+    margin: 0;
 }
 
 .form-footer {
-  @apply text-center text-[0.85rem] text-whisker-muted mt-4 mx-0 mb-0;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--whisker-muted);
+    margin: 1rem 0 0;
 }
 
 .form-footer a {
-  @apply text-whisker-ink font-semibold;
+    color: var(--whisker-ink);
+    font-weight: 600;
 }
 
 /* ---- Dashboard ---- */
 .dashboard-shell {
-  @apply flex min-h-screen w-full max-sm:flex-col;
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
 }
 
 .dashboard-sidebar {
-  @apply w-[13.5rem] flex-none flex flex-col py-6 px-0 max-sm:w-full max-sm:flex-row max-sm:flex-wrap max-sm:items-center max-sm:p-4;
-  background-color: #FFC634;
+    width: 13.5rem;
+    flex: none;
+    background: var(--whisker-yellow);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 0;
+}
+
+.sidebar-logo {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 1.25rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+    margin: 0 1.25rem 1rem;
 }
 
 .sidebar-nav {
-  @apply flex flex-col flex-1 max-sm:flex-row max-sm:flex-wrap;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .sidebar-link {
-  @apply font-sans text-left bg-transparent border-none py-[0.85rem] px-6 text-[0.95rem] font-semibold text-whisker-ink cursor-pointer hover:bg-white/35 [&.active]:bg-white [&.active]:text-whisker-ink;
+    font-family: inherit;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--whisker-ink);
+    cursor: pointer;
+}
+
+.sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.sidebar-link.active {
+    background: #ffffff;
+    color: var(--whisker-ink);
 }
 
 .sidebar-logout {
-  @apply font-sans bg-transparent border-none text-left py-[0.85rem] px-6 font-semibold text-whisker-ink cursor-pointer hover:underline;
+    font-family: inherit;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 0.85rem 1.5rem;
+    font-weight: 600;
+    color: var(--whisker-ink);
+    cursor: pointer;
+}
+
+.sidebar-logout:hover {
+    text-decoration: underline;
 }
 
 .dashboard-content {
-  @apply flex-1 bg-white py-10 px-12 box-border max-sm:p-[1.75rem];
+    flex: 1;
+    background: #ffffff;
+    padding: 2.5rem 3rem;
+    box-sizing: border-box;
 }
 
 .dashboard-welcome {
-  @apply text-[2.1rem] text-left mb-[1.75rem];
+    font-size: 2.1rem;
+    text-align: left;
+    margin-bottom: 1.75rem;
 }
 
 .dashboard-section-title {
-  @apply text-base font-semibold text-whisker-ink mb-4;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--whisker-ink);
+    margin-bottom: 1rem;
 }
 
 .empty-state {
-  @apply text-whisker-muted italic;
+    color: var(--whisker-muted);
+    font-style: italic;
 }
 
 /* ---- Task table ---- */
 .task-table {
-  @apply w-full border-collapse text-[0.9rem];
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
 }
 
 .task-table thead th {
-  @apply text-left font-semibold text-whisker-muted pb-[0.6rem] border-b border-[#ececec];
+    text-align: left;
+    font-weight: 600;
+    color: var(--whisker-muted);
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid #ececec;
 }
 
 .task-table tbody td {
-  @apply pt-3 pr-2 pb-3 pl-0 border-b border-[#f2f2f2];
+    padding: 0.75rem 0.5rem 0.75rem 0;
+    border-bottom: 1px solid #f2f2f2;
 }
 
 .task-table tr.done .task-check span {
-  @apply line-through text-whisker-muted;
+    text-decoration: line-through;
+    color: var(--whisker-muted);
 }
 
 .task-check {
-  @apply flex items-center gap-[0.6rem] cursor-pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
 }
 
 .task-delete {
-  @apply bg-transparent border-none text-[#cfcfcf] cursor-pointer hover:text-[#b3261e];
+    background: none;
+    border: none;
+    color: #cfcfcf;
+    cursor: pointer;
+}
+
+.task-delete:hover {
+    color: #b3261e;
 }
 
 /* ---- Write task / Calendar / Profile ---- */
 .write-task-form {
-  @apply flex flex-col gap-[0.6rem] max-w-[22rem];
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 22rem;
 }
 
 .write-task-form label {
-  @apply text-[0.85rem] font-semibold text-whisker-muted mt-[0.4rem];
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--whisker-muted);
+    margin-top: 0.4rem;
 }
 
 .calendar-list {
-  @apply list-none p-0 m-0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .calendar-list li {
-  @apply py-2 px-0 border-b border-[#f2f2f2];
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+@media (max-width: 640px) {
+    .dashboard-shell {
+        flex-direction: column;
+    }
+
+    .dashboard-sidebar {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    .sidebar-logo {
+        border-bottom: none;
+        margin: 0 0.5rem 0 0;
+        padding: 0;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .dashboard-content {
+        padding: 1.75rem;
+    }
 }
