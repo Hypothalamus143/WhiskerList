@@ -1,0 +1,14 @@
+{
+  "name": "whiskerlist",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tailwind CSS build tooling for the Whisker List Blazor app",
+  "scripts": {
+    "build:css": "tailwindcss -i ./Styles/app.css -o ./wwwroot/css/tailwind.css",
+    "watch:css": "tailwindcss -i ./Styles/app.css -o ./wwwroot/css/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.1.0",
+    "@tailwindcss/cli": "^4.1.0"
+  }
+}
