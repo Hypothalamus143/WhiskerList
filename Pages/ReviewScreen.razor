@@ -1,0 +1,123 @@
+@page "/reviews"
+@inject NavigationManager Nav
+
+<PageTitle>Reviews & Ratings - Whisker List</PageTitle>
+
+<div class="min-h-screen bg-amber-400 p-6 flex flex-col items-center">
+    <div class="w-full max-w-2xl bg-white rounded-xl shadow-md p-6">
+        
+        <!-- Header -->
+        <h1 class="font-['Playfair_Display'] italic font-black text-3xl text-black mb-2">
+            Leave a Review
+        </h1>
+        <p class="text-gray-600 mb-6 text-sm">
+            Share your thoughts and rate your experience!
+        </p>
+
+        <!-- Rating Stars Selection -->
+        <div class="mb-4">
+            <label class="block font-semibold text-gray-700 mb-2">Your Rating</label>
+            <div class="flex gap-2 text-2xl">
+                @for (int i = 1; i <= 5; i++)
+                {
+                    int starValue = i;
+                    <button type="button" 
+                            @onclick="() => SetRating(starValue)"
+                            class="focus:outline-none transition-transform hover:scale-110">
+                        <span class="@(starValue <= SelectedRating ? "text-amber-500" : "text-gray-300")">
+                            ★
+                        </span>
+                    </button>
+                }
+            </div>
+        </div>
+
+        <!-- Comment Input Box -->
+        <div class="mb-4">
+            <label class="block font-semibold text-gray-700 mb-2">Your Comment</label>
+            <textarea @bind="NewCommentText"
+                      rows="4"
+                      placeholder="Write your comment here..."
+                      class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:outline-none text-sm">
+            </textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button @onclick="SubmitReview"
+                disabled="@(SelectedRating == 0 || string.IsNullOrWhiteSpace(NewCommentText))"
+                class="px-6 py-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            Submit Review
+        </button>
+
+        <hr class="my-8 border-gray-200" />
+
+        <!-- Existing Reviews List -->
+        <h2 class="font-semibold text-xl text-gray-800 mb-4">
+            User Feedback (@Reviews.Count)
+        </h2>
+
+        <div class="space-y-4">
+            @if (Reviews.Count == 0)
+            {
+                <p class="text-gray-500 italic text-sm">No reviews yet. Be the first to leave one!</p>
+            }
+            else
+            {
+                @foreach (var review in Reviews)
+                {
+                    <div class="p-4 border border-gray-100 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-gray-800 text-sm">@review.Author</span>
+                            <span class="text-xs text-gray-400">@review.Date.ToString("MMM dd, yyyy")</span>
+                        </div>
+                        <div class="text-amber-500 text-sm mb-2">
+                            @string.Concat(Enumerable.Repeat("★", review.Rating))@string.Concat(Enumerable.Repeat("☆", 5 - review.Rating))
+                        </div>
+                        <p class="text-gray-700 text-sm">@review.Comment</p>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private int SelectedRating = 0;
+    private string NewCommentText = string.Empty;
+
+    private List<ReviewItem> Reviews = new()
+    {
+        new ReviewItem { Author = "CatLover99", Rating = 5, Comment = "Super helpful app!", Date = DateTime.Now.AddDays(-2) },
+        new ReviewItem { Author = "DevUser", Rating = 4, Comment = "Clean UI and smooth navigation.", Date = DateTime.Now.AddDays(-1) }
+    };
+
+    private void SetRating(int rating)
+    {
+        SelectedRating = rating;
+    }
+
+    private void SubmitReview()
+    {
+        if (SelectedRating == 0 || string.IsNullOrWhiteSpace(NewCommentText)) return;
+
+        Reviews.Insert(0, new ReviewItem
+        {
+            Author = "You",
+            Rating = SelectedRating,
+            Comment = NewCommentText,
+            Date = DateTime.Now
+        });
+
+        // Reset form inputs
+        SelectedRating = 0;
+        NewCommentText = string.Empty;
+    }
+
+    public class ReviewItem
+    {
+        public string Author { get; set; } = string.Empty;
+        public int Rating { get; set; }
+        public string Comment { get; set; } = string.Empty;
+        public DateTime Date { get; set; }
+    }
+}
