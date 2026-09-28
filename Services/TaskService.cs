@@ -16,14 +16,47 @@ public class TaskService : ITaskService
 
     public TaskService()
     {
-        // A few sample tasks so the dashboard isn't empty on first run.
+        // Sample tasks so the dashboard isn't empty on first run. Several
+        // are due today, since the Dashboard's "Today" tab now only shows
+        // tasks whose DueDate is today - and one is pre-completed so you
+        // can see the gray/strikethrough + sink-to-bottom behavior working
+        // immediately without having to click a checkbox first.
         _tasks.Add(new TaskItem
         {
             Id = _nextId++,
-            Title = "Feed the cat",
-            Notes = "She will remind you loudly if you forget.",
+            Title = "Mathematics Homework",
             Priority = TaskPriority.High,
             DueDate = DateTime.Today
+        });
+        _tasks.Add(new TaskItem
+        {
+            Id = _nextId++,
+            Title = "Buy Cat Food",
+            Notes = "She will remind you loudly if you forget.",
+            Priority = TaskPriority.Medium,
+            DueDate = DateTime.Today
+        });
+        _tasks.Add(new TaskItem
+        {
+            Id = _nextId++,
+            Title = "Schedule Vet Appointment",
+            Priority = TaskPriority.Medium,
+            DueDate = DateTime.Today
+        });
+        _tasks.Add(new TaskItem
+        {
+            Id = _nextId++,
+            Title = "Organize Study Notes",
+            Priority = TaskPriority.Low,
+            DueDate = DateTime.Today
+        });
+        _tasks.Add(new TaskItem
+        {
+            Id = _nextId++,
+            Title = "Research Cat Litter Options",
+            Priority = TaskPriority.Low,
+            DueDate = DateTime.Today,
+            IsDone = true
         });
         _tasks.Add(new TaskItem
         {
@@ -32,13 +65,6 @@ public class TaskService : ITaskService
             Notes = "Wire up the dashboard and login screens.",
             Priority = TaskPriority.Medium,
             DueDate = DateTime.Today.AddDays(2)
-        });
-        _tasks.Add(new TaskItem
-        {
-            Id = _nextId++,
-            Title = "Take a break",
-            Priority = TaskPriority.Low,
-            IsDone = true
         });
     }
 
