@@ -1,15 +1,23 @@
 @page "/reviews"
 @inject NavigationManager Nav
+@inject WhiskerList.Services.ReviewService ReviewService
 
 <PageTitle>Reviews & Ratings - Whisker List</PageTitle>
 
 <div class="min-h-screen bg-amber-400 p-6 flex flex-col items-center">
     <div class="w-full max-w-2xl bg-white rounded-xl shadow-md p-6">
         
-        <!-- Header -->
-        <h1 class="font-['Playfair_Display'] italic font-black text-3xl text-black mb-2">
-            Leave a Review
-        </h1>
+        <!-- Back / Header Navigation -->
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="font-['Playfair_Display'] italic font-black text-3xl text-black">
+                Leave a Review
+            </h1>
+            <button @onclick='() => Nav.NavigateTo("/")'
+                    class="text-xs text-gray-500 hover:text-black underline transition-colors">
+                ← Back to Home
+            </button>
+        </div>
+
         <p class="text-gray-600 mb-6 text-sm">
             Share your thoughts and rate your experience!
         </p>
@@ -53,17 +61,17 @@
 
         <!-- Existing Reviews List -->
         <h2 class="font-semibold text-xl text-gray-800 mb-4">
-            User Feedback (@Reviews.Count)
+            User Feedback (@ReviewService.Reviews.Count)
         </h2>
 
         <div class="space-y-4">
-            @if (Reviews.Count == 0)
+            @if (ReviewService.Reviews.Count == 0)
             {
                 <p class="text-gray-500 italic text-sm">No reviews yet. Be the first to leave one!</p>
             }
             else
             {
-                @foreach (var review in Reviews)
+                @foreach (var review in ReviewService.Reviews)
                 {
                     <div class="p-4 border border-gray-100 bg-gray-50 rounded-lg">
                         <div class="flex justify-between items-center mb-1">
@@ -85,12 +93,6 @@
     private int SelectedRating = 0;
     private string NewCommentText = string.Empty;
 
-    private List<ReviewItem> Reviews = new()
-    {
-        new ReviewItem { Author = "CatLover99", Rating = 5, Comment = "Super helpful app!", Date = DateTime.Now.AddDays(-2) },
-        new ReviewItem { Author = "DevUser", Rating = 4, Comment = "Clean UI and smooth navigation.", Date = DateTime.Now.AddDays(-1) }
-    };
-
     private void SetRating(int rating)
     {
         SelectedRating = rating;
@@ -100,24 +102,11 @@
     {
         if (SelectedRating == 0 || string.IsNullOrWhiteSpace(NewCommentText)) return;
 
-        Reviews.Insert(0, new ReviewItem
-        {
-            Author = "You",
-            Rating = SelectedRating,
-            Comment = NewCommentText,
-            Date = DateTime.Now
-        });
+        // Save review to the central Singleton Service
+        ReviewService.AddReview(SelectedRating, NewCommentText);
 
         // Reset form inputs
         SelectedRating = 0;
         NewCommentText = string.Empty;
-    }
-
-    public class ReviewItem
-    {
-        public string Author { get; set; } = string.Empty;
-        public int Rating { get; set; }
-        public string Comment { get; set; } = string.Empty;
-        public DateTime Date { get; set; }
     }
 }

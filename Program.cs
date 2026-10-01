@@ -11,5 +11,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddSingleton<ITaskService, TaskService>();
 builder.Services.AddSingleton<AuthState>();
+builder.Services.AddSingleton<WhiskerList.Services.ReviewService>();
 
 await builder.Build().RunAsync();
